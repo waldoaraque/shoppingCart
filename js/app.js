@@ -8,6 +8,7 @@ getEventListeners();
 
 function getEventListeners(){
     courses.addEventListener('click', buyCourses);
+    courses.addEventListener('click', deleteCourse);
 }
 
 //Functions
@@ -47,4 +48,14 @@ function setCourse(data){
         </td>
     `;
     coursesList.appendChild(row);
+}
+
+function deleteCourse(e){
+    e.preventDefault();
+    let course;
+
+    if (e.target.classList.contains('borrar-curso')){
+        e.target.parentElement.parentElement.remove();
+        console.log('The course has been removed.')
+    }
 }
