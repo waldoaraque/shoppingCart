@@ -33,8 +33,6 @@ function dataCourse(course){
     }
 
     setCourse(infoCourse);
-
-    console.log(course);
 }
 
 function setCourse(data){
@@ -50,6 +48,7 @@ function setCourse(data){
         </td>
     `;
     coursesList.appendChild(row);
+    saveInLS(data);
 }
 
 function deleteCourse(e){
@@ -67,4 +66,21 @@ function clearCar(e){
         coursesList.removeChild(coursesList.firstChild);
     }
     return false
+}
+
+function saveInLS(course){
+    let courses;
+    courses = coursesFromLS();
+    courses.push(course);
+    localStorage.setItem('cursos', JSON.stringify(courses));
+}
+
+function coursesFromLS(){
+    let coursesLS;
+    if(localStorage.getItem('cursos') === null) {
+        coursesLS = [];
+    } else {
+        coursesLS = JSON.parse(localStorage.getItem('cursos'));
+    }
+    return coursesLS;
 }
