@@ -54,18 +54,24 @@ function setCourse(data){
 
 function deleteCourse(e){
     e.preventDefault();
-    let course;
+    let course,
+        courseId;
 
     if (e.target.classList.contains('borrar-curso')){
         e.target.parentElement.parentElement.remove();
         console.log('The course has been removed.')
+        course = e.target.parentElement.parentElement;
+        courseId = course.querySelector('a').getAttribute('data-id');
     }
+    deleteCourseLS(courseId);
 }
 
 function clearCar(e){
     while(coursesList.firstChild){
         coursesList.removeChild(coursesList.firstChild);
     }
+
+    clearLocalStorage();
     return false
 }
 
@@ -104,4 +110,20 @@ function getLocalStorage(){
         coursesList.appendChild(row);
     });
     console.log(coursesLS);
+}
+
+function deleteCourseLS(course){
+    let coursesLS;
+    coursesLS = coursesFromLS();
+
+    coursesLS.forEach( (courseLS, index) => {
+       if(courseLS.id === course){
+           coursesLS.splice(index, 1);
+       } 
+    });
+    localStorage.setItem('cursos', JSON.stringify(coursesLS));
+}
+
+function clearLocalStorage(){
+    localStorage.clear();
 }
